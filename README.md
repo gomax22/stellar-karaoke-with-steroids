@@ -3,7 +3,7 @@ Stellar Karaoke: Deep Blind Separation of Terrestrial Atmospheric Effects out of
 
 Here you can find the code and (pointers to) the data used in the paper: [doi.org/10.1093/mnras/stad2686](https://doi.org/10.1093/mnras/stad2686) ([arxiv.org/abs/2301.00313](https://arxiv.org/abs/2301.00313))
 
-![alt](https://www.rawdataspeaks.com/wp-content/uploads/2023/09/Screenshot-from-2023-09-13-15-41-22.png "Stellar Karaoke")
+![alt](https://www.rawdataspeaks.org/wp-content/uploads/2023/09/Screenshot-from-2023-09-13-15-41-22.png "Stellar Karaoke")
 
 
 <!--
