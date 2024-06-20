@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/m.gorsini/stellar-karaoke-with-steroids/inference.py", line 74, in <module>
+    loss_ae1d.append(loss.detach().cpu().numpy())
+    ^^^^^^^^^
+NameError: name 'loss_ae1d' is not defined

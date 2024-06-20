@@ -1,0 +1,136 @@
+
+Number of batches in train_dataloader: 1118
+Number of batches in val_dataloader: 140
+Number of batches in test_dataloader: 140
+Device: cuda
+
+Model loaded successfully frome epoch 12 - loss: 0.040320637010570086.
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+StellarAutoencoder                       [128, 1, 327680]          --
+├─Sequential: 1-1                        [128, 128]                --
+│    └─Conv1d: 2-1                       [128, 16, 163840]         128
+│    └─BatchNorm1d: 2-2                  [128, 16, 163840]         32
+│    └─LeakyReLU: 2-3                    [128, 16, 163840]         --
+│    └─Conv1d: 2-4                       [128, 16, 81920]          1,296
+│    └─BatchNorm1d: 2-5                  [128, 16, 81920]          32
+│    └─LeakyReLU: 2-6                    [128, 16, 81920]          --
+│    └─Conv1d: 2-7                       [128, 16, 40960]          1,296
+│    └─BatchNorm1d: 2-8                  [128, 16, 40960]          32
+│    └─LeakyReLU: 2-9                    [128, 16, 40960]          --
+│    └─Conv1d: 2-10                      [128, 32, 20480]          1,568
+│    └─BatchNorm1d: 2-11                 [128, 32, 20480]          64
+│    └─LeakyReLU: 2-12                   [128, 32, 20480]          --
+│    └─Conv1d: 2-13                      [128, 32, 10240]          3,104
+│    └─BatchNorm1d: 2-14                 [128, 32, 10240]          64
+│    └─LeakyReLU: 2-15                   [128, 32, 10240]          --
+│    └─Conv1d: 2-16                      [128, 32, 5120]           3,104
+│    └─BatchNorm1d: 2-17                 [128, 32, 5120]           64
+│    └─LeakyReLU: 2-18                   [128, 32, 5120]           --
+│    └─Conv1d: 2-19                      [128, 64, 2560]           6,208
+│    └─BatchNorm1d: 2-20                 [128, 64, 2560]           128
+│    └─LeakyReLU: 2-21                   [128, 64, 2560]           --
+│    └─Conv1d: 2-22                      [128, 64, 1280]           12,352
+│    └─BatchNorm1d: 2-23                 [128, 64, 1280]           128
+│    └─LeakyReLU: 2-24                   [128, 64, 1280]           --
+│    └─Conv1d: 2-25                      [128, 64, 640]            12,352
+│    └─BatchNorm1d: 2-26                 [128, 64, 640]            128
+│    └─LeakyReLU: 2-27                   [128, 64, 640]            --
+│    └─Conv1d: 2-28                      [128, 128, 320]           24,704
+│    └─BatchNorm1d: 2-29                 [128, 128, 320]           256
+│    └─LeakyReLU: 2-30                   [128, 128, 320]           --
+│    └─Conv1d: 2-31                      [128, 128, 160]           49,280
+│    └─BatchNorm1d: 2-32                 [128, 128, 160]           256
+│    └─LeakyReLU: 2-33                   [128, 128, 160]           --
+│    └─Conv1d: 2-34                      [128, 128, 80]            49,280
+│    └─BatchNorm1d: 2-35                 [128, 128, 80]            256
+│    └─LeakyReLU: 2-36                   [128, 128, 80]            --
+│    └─Conv1d: 2-37                      [128, 256, 40]            98,560
+│    └─BatchNorm1d: 2-38                 [128, 256, 40]            512
+│    └─LeakyReLU: 2-39                   [128, 256, 40]            --
+│    └─Conv1d: 2-40                      [128, 512, 20]            393,728
+│    └─BatchNorm1d: 2-41                 [128, 512, 20]            1,024
+│    └─LeakyReLU: 2-42                   [128, 512, 20]            --
+│    └─Conv1d: 2-43                      [128, 512, 20]            786,944
+│    └─BatchNorm1d: 2-44                 [128, 512, 20]            1,024
+│    └─LeakyReLU: 2-45                   [128, 512, 20]            --
+│    └─Flatten: 2-46                     [128, 10240]              --
+│    └─Linear: 2-47                      [128, 128]                1,310,848
+├─Sequential: 1-2                        [128, 1, 327680]          --
+│    └─Linear: 2-48                      [128, 10240]              1,320,960
+│    └─Unflatten: 2-49                   [128, 512, 20]            --
+│    └─ConvTranspose1d: 2-50             [128, 512, 20]            786,944
+│    └─BatchNorm1d: 2-51                 [128, 512, 20]            1,024
+│    └─LeakyReLU: 2-52                   [128, 512, 20]            --
+│    └─ConvTranspose1d: 2-53             [128, 256, 40]            524,544
+│    └─BatchNorm1d: 2-54                 [128, 256, 40]            512
+│    └─LeakyReLU: 2-55                   [128, 256, 40]            --
+│    └─ConvTranspose1d: 2-56             [128, 128, 80]            131,200
+│    └─BatchNorm1d: 2-57                 [128, 128, 80]            256
+│    └─LeakyReLU: 2-58                   [128, 128, 80]            --
+│    └─ConvTranspose1d: 2-59             [128, 128, 160]           65,664
+│    └─BatchNorm1d: 2-60                 [128, 128, 160]           256
+│    └─LeakyReLU: 2-61                   [128, 128, 160]           --
+│    └─ConvTranspose1d: 2-62             [128, 128, 320]           65,664
+│    └─BatchNorm1d: 2-63                 [128, 128, 320]           256
+│    └─LeakyReLU: 2-64                   [128, 128, 320]           --
+│    └─ConvTranspose1d: 2-65             [128, 64, 640]            32,832
+│    └─BatchNorm1d: 2-66                 [128, 64, 640]            128
+│    └─LeakyReLU: 2-67                   [128, 64, 640]            --
+│    └─ConvTranspose1d: 2-68             [128, 64, 1280]           16,448
+│    └─BatchNorm1d: 2-69                 [128, 64, 1280]           128
+│    └─LeakyReLU: 2-70                   [128, 64, 1280]           --
+│    └─ConvTranspose1d: 2-71             [128, 64, 2560]           16,448
+│    └─BatchNorm1d: 2-72                 [128, 64, 2560]           128
+│    └─LeakyReLU: 2-73                   [128, 64, 2560]           --
+│    └─ConvTranspose1d: 2-74             [128, 32, 5120]           8,224
+│    └─BatchNorm1d: 2-75                 [128, 32, 5120]           64
+│    └─LeakyReLU: 2-76                   [128, 32, 5120]           --
+│    └─ConvTranspose1d: 2-77             [128, 32, 10240]          4,128
+│    └─BatchNorm1d: 2-78                 [128, 32, 10240]          64
+│    └─LeakyReLU: 2-79                   [128, 32, 10240]          --
+│    └─ConvTranspose1d: 2-80             [128, 32, 20480]          4,128
+│    └─BatchNorm1d: 2-81                 [128, 32, 20480]          64
+│    └─LeakyReLU: 2-82                   [128, 32, 20480]          --
+│    └─ConvTranspose1d: 2-83             [128, 16, 40960]          2,064
+│    └─BatchNorm1d: 2-84                 [128, 16, 40960]          32
+│    └─LeakyReLU: 2-85                   [128, 16, 40960]          --
+│    └─ConvTranspose1d: 2-86             [128, 16, 81920]          1,040
+│    └─BatchNorm1d: 2-87                 [128, 16, 81920]          32
+│    └─LeakyReLU: 2-88                   [128, 16, 81920]          --
+│    └─ConvTranspose1d: 2-89             [128, 16, 163840]         1,040
+│    └─BatchNorm1d: 2-90                 [128, 16, 163840]         32
+│    └─LeakyReLU: 2-91                   [128, 16, 163840]         --
+│    └─ConvTranspose1d: 2-92             [128, 1, 327680]          65
+│    └─BatchNorm1d: 2-93                 [128, 1, 327680]          2
+│    └─LeakyReLU: 2-94                   [128, 1, 327680]          --
+│    └─Conv1d: 2-95                      [128, 1, 327680]          4
+==========================================================================================
+Total params: 5,743,127
+Trainable params: 5,743,127
+Non-trainable params: 0
+Total mult-adds (Units.GIGABYTES): 133.65
+==========================================================================================
+Input size (MB): 167.77
+Forward/backward pass size (MB): 26078.22
+Params size (MB): 22.97
+Estimated Total Size (MB): 26268.96
+==========================================================================================
+Epoch: 0 	| train_loss: 0.0398 	| val_loss: 0.0373 | 
+Epoch: 1 	| train_loss: 0.0381 	| val_loss: 0.0376 | 
+Epoch: 2 	| train_loss: 0.0376 	| val_loss: 0.0363 | 
+Epoch: 3 	| train_loss: 0.0369 	| val_loss: 0.0377 | 
+Epoch: 4 	| train_loss: 0.0365 	| val_loss: 0.0387 | 
+Epoch: 5 	| train_loss: 0.0363 	| val_loss: 0.0374 | 
+Epoch: 6 	| train_loss: 0.0360 	| val_loss: 0.0372 | 
+Epoch: 7 	| train_loss: 0.0357 	| val_loss: 0.0348 | 
+Epoch: 8 	| train_loss: 0.0353 	| val_loss: 0.0334 | 
+Epoch: 9 	| train_loss: 0.0351 	| val_loss: 0.0366 | 
+Epoch: 10 	| train_loss: 0.0349 	| val_loss: 0.0344 | 
+Epoch: 11 	| train_loss: 0.0348 	| val_loss: 0.0349 | 
+Epoch: 12 	| train_loss: 0.0347 	| val_loss: 0.0354 | 
+Epoch: 13 	| train_loss: 0.0344 	| val_loss: 0.0344 | 
+Epoch: 14 	| train_loss: 0.0342 	| val_loss: 0.0334 | 
+{'model_name': 'StellarAutoencoder', 'model_loss': 0.033247101732662744}
+Output shape: torch.Size([8944, 1, 327680])

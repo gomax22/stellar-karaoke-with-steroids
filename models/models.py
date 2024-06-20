@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.nn.init import kaiming_normal_
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def conv(in_planes, out_planes, kernel_size=3, stride=1):
     return nn.Sequential(
@@ -68,6 +69,10 @@ class ae1d(nn.Module):
         self.n_bottleneck_input_elements = out15_shape_flat[1]
         self.fc11 = nn.Linear(self.n_bottleneck_input_elements,128)
         self.fc12 = nn.Linear(self.n_bottleneck_input_elements,128)
+        
+        # initialize logvar weights with zeros
+        # self.fc12.weight.data.fill_(1)
+        # self.fc12.bias.data.fill_(0)
 
         self.n_bottleneck_output_elements = self.n_bottleneck_input_elements
         self.fc2 = nn.Linear(128,self.n_bottleneck_output_elements)
@@ -89,7 +94,18 @@ class ae1d(nn.Module):
         self.deconv1 = deconv(16,1) 
         self.predict0 = predict(1)
 
-
+    def reparameterize(self, mu: torch.Tensor, logvar: torch.Tensor) -> torch.Tensor:
+        """
+        Will a single z be enough ti compute the expectation
+        for the loss?
+        :param mu: (Tensor) Mean of the latent Gaussian
+        :param logvar: (Tensor) Standard deviation of the latent Gaussian
+        :return:
+        """
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return eps * std + mu
+    
     def encode(self,x):
         out_conv1 = self.conv1(x)
         out_conv2 = self.conv2(out_conv1)
@@ -111,6 +127,7 @@ class ae1d(nn.Module):
 
         mu = self.fc11(out_conv15_flat)
         logvar = self.fc12(out_conv15_flat) 
+        # return mu, logvar
         return mu
     
     def decode(self,latent_vector):
@@ -136,7 +153,86 @@ class ae1d(nn.Module):
 
         return out0
         
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
+        """
+        mu, log_var = self.encode(x)
+        z = self.reparameterize(mu, log_var)
+        out = self.decode(z)
+        return [out, mu, log_var]
+        """
+
         latent_vector = self.encode(x)
         out0 = self.decode(latent_vector)
         return out0
+    
+
+
+class StellarAutoencoder(nn.Module):
+    def __init__(self, enc_dim):
+        super(StellarAutoencoder, self).__init__()
+        self.enc_dim = enc_dim
+
+        self.encoder = nn.Sequential(
+            nn.Conv1d(in_channels=1, out_channels=16, kernel_size=7, stride=2, padding=(7-1)//2, bias=True), nn.BatchNorm1d(16), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=16, out_channels=16, kernel_size=5, stride=2, padding=(5-1)//2, bias=True), nn.BatchNorm1d(16), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=16, out_channels=16, kernel_size=5, stride=2, padding=(5-1)//2, bias=True), nn.BatchNorm1d(16), nn.LeakyReLU(0.1,inplace=True), 
+            nn.Conv1d(in_channels=16, out_channels=32, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(32), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=32, out_channels=32, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(32), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=32, out_channels=32, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(32), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=32, out_channels=64, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(64), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=64, out_channels=64, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(64), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=64, out_channels=64, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(64), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=64, out_channels=128, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(128), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=128, out_channels=128, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(128), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=128, out_channels=128, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(128), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=128, out_channels=256, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(256), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=256, out_channels=512, kernel_size=3, stride=2, padding=(3-1)//2, bias=True), nn.BatchNorm1d(512), nn.LeakyReLU(0.1,inplace=True),
+            nn.Conv1d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=(3-1)//2, bias=True), nn.BatchNorm1d(512), nn.LeakyReLU(0.1,inplace=True),   
+            nn.Flatten(),
+            nn.Linear(512 * 20, enc_dim),
+        )
+
+        # self.mu = nn.Linear(512 * 20, enc_dim)
+        # self.logvar = nn.Linear(512 * 20, enc_dim)
+
+        self.decoder = nn.Sequential(
+            nn.Linear(enc_dim, 512 * 20),               
+            nn.Unflatten(-1, (512, 20)),
+            nn.ConvTranspose1d(in_channels=512, out_channels=512, kernel_size=3, stride=1, padding=1, bias=True), nn.BatchNorm1d(512), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=512, out_channels=256, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(256), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=256, out_channels=128, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(128), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=128, out_channels=128, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(128), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=128, out_channels=128, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(128), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=128, out_channels=64, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(64), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=64, out_channels=64, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(64), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=64, out_channels=64, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(64), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=64, out_channels=32, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(32), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=32, out_channels=32, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(32), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=32, out_channels=32, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(32), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=32, out_channels=16, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(16), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=16, out_channels=16, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(16), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=16, out_channels=16, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(16), nn.LeakyReLU(0.1, inplace=True),
+            nn.ConvTranspose1d(in_channels=16, out_channels=1, kernel_size=4, stride=2, padding=1, bias=True), nn.BatchNorm1d(1), nn.LeakyReLU(0.1, inplace=True),
+            nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, stride=1, padding=1, bias=True)
+        )
+        
+        self.weight_init()
+
+    def forward(self, x: torch.Tensor):
+        return self.decoder(self.encoder(x))
+    
+    
+    def weight_init(self, mode: str = 'kaiming'):
+        for block in self._modules:
+            for m in self._modules[block]:
+                kaiming_init(m)
+
+def kaiming_init(m):
+    if isinstance(m, (nn.Linear, nn.Conv1d, nn.Conv2d)):
+        nn.init.kaiming_normal_(m.weight, nonlinearity='relu')
+        if m.bias is not None:
+            m.bias.data.fill_(0)
+    elif isinstance(m, (nn.BatchNorm1d, nn.BatchNorm2d)):
+        m.weight.data.fill_(1)
+        if m.bias is not None:
+            m.bias.data.fill_(0)

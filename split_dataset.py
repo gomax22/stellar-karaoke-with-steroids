@@ -30,7 +30,7 @@ for i in range(1, args['split'] + 1):
 
 def copy(chunk_id, chunk):
     for fname in chunk:
-        shutil.copyfile(os.path.join(args['input'], fname), os.path.join(args['input'], 'split', str(chunk_id + 1), fname))
+        os.rename(os.path.join(args['input'], fname), os.path.join(args['input'], 'split', str(chunk_id + 1), fname))
 
 if __name__ == "__main__":
     with ThreadPoolExecutor() as executor:

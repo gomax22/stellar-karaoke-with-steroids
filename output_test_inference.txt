@@ -1,0 +1,30 @@
+np.mean(loss_ae1d): 0.7358928918838501
+np.mean(loss_sae): 0.03069808892905712
+np.mean(loss_bvae): 2.8939390182495117
+np.mean(recon_loss): 0.013526282273232937
+np.mean(kld_loss): 9.601375579833984
+
+np.std(loss_ae1d): 0.0
+np.std(loss_sae): 0.0
+np.std(loss_bvae): 0.0
+np.std(recon_loss): 0.0
+np.std(kld_loss): 0.0
+
+np.median(loss_ae1d): 0.7358928918838501
+np.median(loss_sae): 0.03069808892905712
+np.median(loss_bvae): 2.8939390182495117
+np.median(recon_loss): 0.013526282273232937
+np.median(kld_loss): 9.601375579833984
+
+np.min(loss_ae1d): 0.7358928918838501
+np.min(loss_sae): 0.03069808892905712
+np.min(loss_bvae): 2.8939390182495117
+np.min(recon_loss): 0.013526282273232937
+np.min(kld_loss): 9.601375579833984
+
+np.max(loss_ae1d): 0.7358928918838501
+np.max(loss_sae): 0.03069808892905712
+np.max(loss_bvae): 2.8939390182495117
+np.max(recon_loss): 0.013526282273232937
+np.max(kld_loss): 9.601375579833984
+

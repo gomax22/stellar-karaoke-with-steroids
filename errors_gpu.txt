@@ -1,0 +1,1 @@
+slurmstepd: error: *** JOB 118827 ON gnode02 CANCELLED AT 2024-03-27T14:38:15 ***

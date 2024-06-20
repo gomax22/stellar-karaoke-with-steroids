@@ -1,0 +1,106 @@
+
+Number of batches in train_dataloader: 1118
+Number of batches in val_dataloader: 140
+Number of batches in test_dataloader: 140
+Device: cuda
+
+Model loaded successfully frome epoch 14 - loss: 0.031210279145411083.
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+BetaVAE_H                                [128, 1, 327680]          --
+├─Sequential: 1-1                        [128, 256]                --
+│    └─Conv1d: 2-1                       [128, 16, 163840]         128
+│    └─LeakyReLU: 2-2                    [128, 16, 163840]         --
+│    └─Conv1d: 2-3                       [128, 16, 81920]          1,296
+│    └─LeakyReLU: 2-4                    [128, 16, 81920]          --
+│    └─Conv1d: 2-5                       [128, 16, 40960]          1,296
+│    └─LeakyReLU: 2-6                    [128, 16, 40960]          --
+│    └─Conv1d: 2-7                       [128, 32, 20480]          1,568
+│    └─LeakyReLU: 2-8                    [128, 32, 20480]          --
+│    └─Conv1d: 2-9                       [128, 32, 10240]          3,104
+│    └─LeakyReLU: 2-10                   [128, 32, 10240]          --
+│    └─Conv1d: 2-11                      [128, 32, 5120]           3,104
+│    └─LeakyReLU: 2-12                   [128, 32, 5120]           --
+│    └─Conv1d: 2-13                      [128, 64, 2560]           6,208
+│    └─LeakyReLU: 2-14                   [128, 64, 2560]           --
+│    └─Conv1d: 2-15                      [128, 64, 1280]           12,352
+│    └─LeakyReLU: 2-16                   [128, 64, 1280]           --
+│    └─Conv1d: 2-17                      [128, 64, 640]            12,352
+│    └─LeakyReLU: 2-18                   [128, 64, 640]            --
+│    └─Conv1d: 2-19                      [128, 128, 320]           24,704
+│    └─LeakyReLU: 2-20                   [128, 128, 320]           --
+│    └─Conv1d: 2-21                      [128, 128, 160]           49,280
+│    └─LeakyReLU: 2-22                   [128, 128, 160]           --
+│    └─Conv1d: 2-23                      [128, 128, 80]            49,280
+│    └─LeakyReLU: 2-24                   [128, 128, 80]            --
+│    └─Conv1d: 2-25                      [128, 256, 40]            98,560
+│    └─LeakyReLU: 2-26                   [128, 256, 40]            --
+│    └─Conv1d: 2-27                      [128, 512, 20]            393,728
+│    └─LeakyReLU: 2-28                   [128, 512, 20]            --
+│    └─Conv1d: 2-29                      [128, 512, 20]            786,944
+│    └─LeakyReLU: 2-30                   [128, 512, 20]            --
+│    └─View: 2-31                        [128, 10240]              --
+│    └─Linear: 2-32                      [128, 256]                2,621,696
+├─Sequential: 1-2                        [128, 1, 327680]          --
+│    └─Linear: 2-33                      [128, 10240]              1,320,960
+│    └─View: 2-34                        [128, 512, 20]            --
+│    └─ConvTranspose1d: 2-35             [128, 512, 20]            786,944
+│    └─LeakyReLU: 2-36                   [128, 512, 20]            --
+│    └─ConvTranspose1d: 2-37             [128, 256, 40]            524,544
+│    └─LeakyReLU: 2-38                   [128, 256, 40]            --
+│    └─ConvTranspose1d: 2-39             [128, 128, 80]            131,200
+│    └─LeakyReLU: 2-40                   [128, 128, 80]            --
+│    └─ConvTranspose1d: 2-41             [128, 128, 160]           65,664
+│    └─LeakyReLU: 2-42                   [128, 128, 160]           --
+│    └─ConvTranspose1d: 2-43             [128, 128, 320]           65,664
+│    └─LeakyReLU: 2-44                   [128, 128, 320]           --
+│    └─ConvTranspose1d: 2-45             [128, 64, 640]            32,832
+│    └─LeakyReLU: 2-46                   [128, 64, 640]            --
+│    └─ConvTranspose1d: 2-47             [128, 64, 1280]           16,448
+│    └─LeakyReLU: 2-48                   [128, 64, 1280]           --
+│    └─ConvTranspose1d: 2-49             [128, 64, 2560]           16,448
+│    └─LeakyReLU: 2-50                   [128, 64, 2560]           --
+│    └─ConvTranspose1d: 2-51             [128, 32, 5120]           8,224
+│    └─LeakyReLU: 2-52                   [128, 32, 5120]           --
+│    └─ConvTranspose1d: 2-53             [128, 32, 10240]          4,128
+│    └─LeakyReLU: 2-54                   [128, 32, 10240]          --
+│    └─ConvTranspose1d: 2-55             [128, 32, 20480]          4,128
+│    └─LeakyReLU: 2-56                   [128, 32, 20480]          --
+│    └─ConvTranspose1d: 2-57             [128, 16, 40960]          2,064
+│    └─LeakyReLU: 2-58                   [128, 16, 40960]          --
+│    └─ConvTranspose1d: 2-59             [128, 16, 81920]          1,040
+│    └─LeakyReLU: 2-60                   [128, 16, 81920]          --
+│    └─ConvTranspose1d: 2-61             [128, 16, 163840]         1,040
+│    └─LeakyReLU: 2-62                   [128, 16, 163840]         --
+│    └─ConvTranspose1d: 2-63             [128, 1, 327680]          65
+│    └─LeakyReLU: 2-64                   [128, 1, 327680]          --
+│    └─Conv1d: 2-65                      [128, 1, 327680]          4
+==========================================================================================
+Total params: 7,046,997
+Trainable params: 7,046,997
+Non-trainable params: 0
+Total mult-adds (Units.GIGABYTES): 133.81
+==========================================================================================
+Input size (MB): 167.77
+Forward/backward pass size (MB): 13212.32
+Params size (MB): 28.19
+Estimated Total Size (MB): 13408.28
+==========================================================================================
+Epoch: 0 	| train_loss: 0.0231 	| train_recon_loss: 0.0215 	| train_kld_loss: 0.0016 	| val_loss: 0.0319 | val_recon_loss: 0.0189 | val_kld_loss: 0.0129
+Epoch: 1 	| train_loss: 0.0229 	| train_recon_loss: 0.0212 	| train_kld_loss: 0.0016 	| val_loss: 0.0317 | val_recon_loss: 0.0188 | val_kld_loss: 0.0129
+Epoch: 2 	| train_loss: 0.0227 	| train_recon_loss: 0.0211 	| train_kld_loss: 0.0016 	| val_loss: 0.0315 | val_recon_loss: 0.0187 | val_kld_loss: 0.0128
+Epoch: 3 	| train_loss: 0.0226 	| train_recon_loss: 0.0210 	| train_kld_loss: 0.0016 	| val_loss: 0.0314 | val_recon_loss: 0.0186 | val_kld_loss: 0.0128
+Epoch: 4 	| train_loss: 0.0225 	| train_recon_loss: 0.0209 	| train_kld_loss: 0.0016 	| val_loss: 0.0314 | val_recon_loss: 0.0185 | val_kld_loss: 0.0129
+Epoch: 5 	| train_loss: 0.0224 	| train_recon_loss: 0.0208 	| train_kld_loss: 0.0016 	| val_loss: 0.0313 | val_recon_loss: 0.0184 | val_kld_loss: 0.0129
+Epoch: 6 	| train_loss: 0.0223 	| train_recon_loss: 0.0207 	| train_kld_loss: 0.0016 	| val_loss: 0.0312 | val_recon_loss: 0.0183 | val_kld_loss: 0.0129
+Epoch: 7 	| train_loss: 0.0223 	| train_recon_loss: 0.0206 	| train_kld_loss: 0.0016 	| val_loss: 0.0312 | val_recon_loss: 0.0183 | val_kld_loss: 0.0129
+Epoch: 8 	| train_loss: 0.0222 	| train_recon_loss: 0.0206 	| train_kld_loss: 0.0016 	| val_loss: 0.0311 | val_recon_loss: 0.0182 | val_kld_loss: 0.0130
+Epoch: 9 	| train_loss: 0.0221 	| train_recon_loss: 0.0205 	| train_kld_loss: 0.0016 	| val_loss: 0.0310 | val_recon_loss: 0.0181 | val_kld_loss: 0.0129
+Epoch: 10 	| train_loss: 0.0221 	| train_recon_loss: 0.0204 	| train_kld_loss: 0.0016 	| val_loss: 0.0311 | val_recon_loss: 0.0181 | val_kld_loss: 0.0130
+Epoch: 11 	| train_loss: 0.0220 	| train_recon_loss: 0.0204 	| train_kld_loss: 0.0016 	| val_loss: 0.0311 | val_recon_loss: 0.0180 | val_kld_loss: 0.0131
+Epoch: 12 	| train_loss: 0.0220 	| train_recon_loss: 0.0203 	| train_kld_loss: 0.0016 	| val_loss: 0.0309 | val_recon_loss: 0.0180 | val_kld_loss: 0.0129
+Epoch: 13 	| train_loss: 0.0219 	| train_recon_loss: 0.0203 	| train_kld_loss: 0.0016 	| val_loss: 0.0309 | val_recon_loss: 0.0180 | val_kld_loss: 0.0129
+Epoch: 14 	| train_loss: 0.0219 	| train_recon_loss: 0.0202 	| train_kld_loss: 0.0016 	| val_loss: 0.0309 | val_recon_loss: 0.0179 | val_kld_loss: 0.0130
+{'model_name': 'BetaVAE_H', 'model_loss': 0.03124468478241137, 'model_recon_loss': 0.017584238001810654, 'model_kld_loss': 0.013660446760643806}
+Output shape: torch.Size([8944, 1, 327680])
